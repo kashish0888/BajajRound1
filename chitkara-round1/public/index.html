@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Hierarchy Builder</title>
+
+  <style>
+    body {
+      font-family: Arial;
+      padding: 30px;
+      max-width: 900px;
+      margin: auto;
+    }
+
+    textarea {
+      width: 100%;
+      height: 150px;
+    }
+
+    button {
+      padding: 10px 20px;
+      margin-top: 10px;
+    }
+
+    pre {
+      background: #f4f4f4;
+      padding: 20px;
+      overflow: auto;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h2>Chitkara Full Stack Challenge</h2>
+
+  <textarea id="input">A->B
+A->C
+B->D</textarea>
+
+  <br>
+
+  <button onclick="submitData()">Submit</button>
+
+  <pre id="result"></pre>
+
+  <script>
+    async function submitData() {
+
+      const lines = document
+        .getElementById("input")
+        .value
+        .split("\n")
+        .filter(x => x.trim());
+
+      const res = await fetch("/bfhl", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          data: lines
+        })
+      });
+
+      const data = await res.json();
+
+      document.getElementById("result").textContent =
+        JSON.stringify(data, null, 2);
+    }
+  </script>
+
+</body>
+</html>
